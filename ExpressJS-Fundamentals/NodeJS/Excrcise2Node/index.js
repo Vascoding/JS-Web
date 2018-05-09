@@ -18,4 +18,4 @@ http.createServer((req, res) => {
     }
 }).listen(port)
 
-console.log('Server is listening on por 1337....')
+console.log('Server is listening on port 1337....')
