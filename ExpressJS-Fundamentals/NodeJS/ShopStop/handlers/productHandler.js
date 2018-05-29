@@ -3,7 +3,13 @@ const qs = require('querystring')
 const db = require('../config/database')
 const multiparty = require('multiparty')
 const shortid = require('shortid')
+let http = require('http')
 
+/**
+ * 
+ * @param {http.ClientRequest} req 
+ * @param {http.ClientResponse} res 
+ */
 let productHandler = (req, res) => {
     if (req.path === '/product/add' && req.method === 'GET') {
         fs.readFile('./views/products/add.html', (err, data) => {

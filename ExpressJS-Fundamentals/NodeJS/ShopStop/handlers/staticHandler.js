@@ -1,6 +1,12 @@
 
 let fs = require('fs')
+let http = require('http')
 
+/**
+ * 
+ * @param {http.ClientRequest} req 
+ * @param {http.ClientResponse} res 
+ */
 let staticHandler = (req, res) => {
     if (req.path.startsWith('/static/') || req.path.startsWith('/views') || req.path.startsWith('/content/images')){
         fs.readFile('.' + req.path, (err, data) => {
@@ -8,7 +14,7 @@ let staticHandler = (req, res) => {
                 console.log(err)
                 return 
             }
-
+            
             if (req.path.endsWith('.css')) {
                 res.writeHead(200, {
                    'content-type': 'text/css'

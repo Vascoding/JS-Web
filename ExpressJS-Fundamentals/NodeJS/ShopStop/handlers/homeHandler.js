@@ -2,7 +2,13 @@ let fs = require('fs')
 let db = require('../config/database')
 let qs = require('querystring')
 const url = require('url')
+let http = require('http')
 
+/**
+ * 
+ * @param {http.ClientRequest} req 
+ * @param {http.ClientResponse} res 
+ */
 let homeHandler = (req, res) => {
     if (req.path === '/home' || req.path === '/'|| req.path === '' && req.method === 'GET') {
         fs.readFile('./views/home/index.html', (err, data) => {

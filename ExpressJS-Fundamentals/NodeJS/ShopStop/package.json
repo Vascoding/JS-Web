@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "VV",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "multiparty": "^4.1.4",
     "shortid": "^2.2.8"
