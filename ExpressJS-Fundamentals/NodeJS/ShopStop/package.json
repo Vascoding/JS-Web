@@ -9,6 +9,9 @@
   "author": "VV",
   "license": "MIT",
   "dependencies": {
+    "gulp": "3.9.1",
+    "gulp-clean-css": "3.9.4",
+    "gulp-rename": "^1.2.3",
     "multiparty": "^4.1.4",
     "shortid": "^2.2.8"
   }

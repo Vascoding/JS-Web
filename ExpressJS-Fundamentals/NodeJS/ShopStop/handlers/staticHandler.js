@@ -8,7 +8,7 @@ let http = require('http')
  * @param {http.ClientResponse} res 
  */
 let staticHandler = (req, res) => {
-    if (req.path.startsWith('/static/') || req.path.startsWith('/views') || req.path.startsWith('/content/images')){
+    if (req.path.startsWith('/content/') || req.path.startsWith('/views')){
         fs.readFile('.' + req.path, (err, data) => {
             if (err) {
                 console.log(err)
