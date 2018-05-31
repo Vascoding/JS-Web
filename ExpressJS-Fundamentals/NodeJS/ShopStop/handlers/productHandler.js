@@ -1,9 +1,10 @@
 const fs = require('fs')
 const qs = require('querystring')
-const db = require('../config/database')
 const multiparty = require('multiparty')
 const shortid = require('shortid')
-let http = require('http')
+const http = require('http')
+const Product = require('../models/Product')
+const Category = require('../models/Category')
 
 /**
  * 
@@ -17,8 +18,19 @@ let productHandler = (req, res) => {
                 console.log(err.message)
                 return
             }
-            res.write(data)
-            res.end()
+
+            Category.find().then((categories) => {
+                let replacement = `<select class="input-field" name="category">`
+
+                for (let category of categories) {
+                    replacement += `<option value="${category._id}">${category.name}</option>`
+                }
+                replacement += '</select>'
+
+                let html = data.toString().replace('{categories}', replacement)
+                res.write(html)
+                res.end()
+            })
         })
         return
     } else if (req.path === '/product/add' && req.method === 'POST') {
@@ -66,13 +78,21 @@ let productHandler = (req, res) => {
             }
         })
         form.on('close', () => {
-            db.add(product)
-
-            res.writeHead(302, {
-                Location: '/'
+            Product.create(product)
+            .then((createdProduct) => {
+                Category.findById(product.category)
+                .then((category) => {
+                    category.products.push(createdProduct._id)
+                    category.save()
+                    
+                    res.writeHead(302, {
+                        Location: '/'
+                    })
+        
+                    res.end()
+                })
+               
             })
-
-            res.end()
         })
         form.parse(req)
     } else {

@@ -1,6 +1,7 @@
-let homeHandler = require('./homeHandler')
-let staticHandler = require('./staticHandler')
-let errorHandler = require('./errorHandler')
-let productHandler = require('./productHandler')
+const homeHandler = require('./homeHandler')
+const staticHandler = require('./staticHandler')
+const errorHandler = require('./errorHandler')
+const productHandler = require('./productHandler')
+const categoryHandler = require('./categoryHandler')
 
-module.exports = [homeHandler, staticHandler, errorHandler, productHandler]
+module.exports = [homeHandler, staticHandler, errorHandler, productHandler, categoryHandler]

@@ -1,8 +1,8 @@
-let fs = require('fs')
-let db = require('../config/database')
-let qs = require('querystring')
+const fs = require('fs')
+const qs = require('querystring')
 const url = require('url')
-let http = require('http')
+const http = require('http')
+const Product = require('../models/Product')
 
 /**
  * 
@@ -18,25 +18,25 @@ let homeHandler = (req, res) => {
             }
             let queryData = qs.parse(url.parse(req.url).query)
             let content = ''
-            let products = db.getAll()
-            
-            if (queryData.query) {
-                products = products.filter(p => p.name.toLowerCase().includes(queryData.query.toLowerCase()))
-            }
+            Product.find().then((products) => {
+                if (queryData.query) {
+                    products = products.filter(p => p.name.toLowerCase().includes(queryData.query.toLowerCase()))
+                }
 
-            for (let product of products) {
-                 content += `<div class="product-card">
-                 <img class="product-img" src="${product.image}" alt="Product Image">
-                 <h2>${product.name}</h2>
-                 <h2>${product.price}</h2>
-                 <p>${product.description}</p>
-               </div>`
-            }
-
-            let html = data.toString().replace('{content}', content)
-
-            res.write(html)
-            res.end()
+                for (let product of products) {
+                    content += `<div class="product-card">
+                    <img class="product-img" src="${product.image}" alt="Product Image">
+                    <h2>${product.name}</h2>
+                    <h2>${product.price}</h2>
+                    <p>${product.description}</p>
+                  </div>`
+               }
+   
+               let html = data.toString().replace('{content}', content)
+   
+               res.write(html)
+               res.end()
+            })
         })
         return
     } else {

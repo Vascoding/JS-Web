@@ -3,6 +3,11 @@ const fs = require('fs')
 const url = require('url')
 const port = 1337
 const baseHandler = require('./handlers/baseHandler')
+let enviroment = process.env.NODE_ENV || 'development'
+const config = require('./config/config')
+const database = require('./config/database.config')
+
+database(config[enviroment])
 
 http.createServer((req, res) => {
     req.path = url.parse(req.url).pathname

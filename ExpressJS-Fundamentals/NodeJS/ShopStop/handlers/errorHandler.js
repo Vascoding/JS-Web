@@ -1,6 +1,6 @@
-let fs = require('fs')
-let routes = ['/', '/home', '/product/add']
-let http = require('http')
+const fs = require('fs')
+const routes = ['/', '/home', '/product/add', '/category/add']
+const http = require('http')
 
 /**
  * 
