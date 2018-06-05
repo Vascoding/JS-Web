@@ -8,6 +8,9 @@ let addImage = (req, res) => {
   form.parse(req, (err, fields, files) => {
     
     fields.creationDate = Date.now()
+    fields.tags = fields.tags.split(',').filter(t => t !== '')
+    fields.tagsID = fields.tagsID.split(',').filter(t => t !== '')
+    
     new Image(fields)
     .save()
     .then(() => {

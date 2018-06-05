@@ -5,8 +5,8 @@ let imageSchema = mongoose.Schema({
     imageTitle: {type: String},
     creationDate: {type: Date},
     description: {type: String},
-    tags: {type: String},
-    tagsID: {type: String}
+    tags: [{type: String}],
+    tagsID: [{type: String}],
 })
 
 let Image = mongoose.model('Image', imageSchema)
