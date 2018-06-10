@@ -21,32 +21,21 @@ let searchImages = (req, res) => {
         console.log(err.message)
         return
       }
-
+      let tagFilter = req.pathquery.tagName ? { tags: { $in: req.pathquery.tagName.split(',').filter(t => t !== '') } } : {};
       let beforeDate = req.pathquery.beforeDate ? req.pathquery.beforeDate : Date.now()
       let afterDate = req.pathquery.afterDate ? req.pathquery.afterDate : new Date(0, 0, 0)
       let limit = req.pathquery.Limit ? Number(req.pathquery.Limit) : 10
 
-      if (req.pathquery.tagName !== '') {
-        let tagNames = req.pathquery.tagName.split(',').filter(t => t !== '')
-        
-        Image.find({
-          tags: { $in: tagNames}
-        })
-        .sort({creationDate: -1})
-        .then((images) => {
-          renderFoundImages(res, data, images)
-        })
-      } else {
-        Image.find({})
-        .where('creationDate')
-        .gt(afterDate)
-        .lt(beforeDate)
-        .sort({creationDate: -1})
-        .limit(limit)
-        .then((images) => {
-          renderFoundImages(res, data, images)
-        })
-      }
+      
+      Image.find(tagFilter)
+      .where('creationDate')
+      .gt(afterDate)
+      .lt(beforeDate)
+      .sort({creationDate: -1})
+      .limit(limit)
+      .then((images) => {
+        renderFoundImages(res, data, images)
+      })
     })
   }
 }

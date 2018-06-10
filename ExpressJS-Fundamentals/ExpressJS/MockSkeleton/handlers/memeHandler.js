@@ -78,7 +78,20 @@ meme.get('/search', (req, res) => {
 })
 
 meme.get('/details/:id', (req, res) => {
-  res.send(`meme with ${req.params.id}`)
+  Meme.findById(req.params.id.slice(1, req.params.id.length))
+  .then((meme) => {
+    fs.readFile('./views/details.html', (err, data) => {
+      let thumb = new Buffer(meme.image.data.buffer).toString('base64');
+      let replacement = `<div class="content">
+      <img src="data:image/jpeg;base64,${thumb}"/>
+      <h3>Title  ${meme.title}</h3>
+      <p> ${meme.description}</p>
+      </div>`
+      data = data.toString().replace('<div id="replaceMe">{{replaceMe}}</div>', replacement)
+      res.write(data)
+      res.end()
+    })
+  })
 })
 
 let memeHandler = meme
